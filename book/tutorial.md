@@ -1,9 +1,22 @@
 (tutorial)=
 # Tutorial
+
+## Installing QIIME 2
 :::{note}
 This document was built with its own conda environment.
 You can download the environment file that was used from the download link on the top-right of this article.
 :::
+
+This tutorial uses the command line interface or cli. If you are uncomfortable with using the cli, [this](https://drive.google.com/file/d/1syrgAHkO6fbtHgIYWochwpWTEarrBSLG/view) video serves as an introduction to basic cli usage.
+
+Make sure you have conda installed by running the command `conda --version`. If you do not have conda installed follow the instructions [here](https://library.qiime2.org/quickstart/amplicon#id-1-installing-miniconda).
+
+```
+conda env create -n q2-amf-tutorial -f https://amf-tutorial.readthedocs.io/en/latest/build/environment-b1d7772e405cbc1565ad5d4ff27ccf4b.yml
+conda activate q2-amf-tutorial
+```
+
+In order to use q2-fondue, you will first need to configure fondue. Instructions for doing so may be found [here](https://library.qiime2.org/plugins/bokulich-lab/q2-fondue#mandatory-configuration-for-all-three-options).
 
 ## Sample metadata
 
@@ -17,7 +30,7 @@ metadata = use.init_metadata_from_url('metadata',
 :::
 
 ## Obtaining the data
-In this tutorial, we will use [q2-fondue](https://library.qiime2.org/plugins/bokulich-lab/q2-fondue) to download our publically available data and import them into QIIME 2.
+In this tutorial, we will use [q2-fondue](https://library.qiime2.org/plugins/bokulich-lab/q2-fondue) to download our publicly available data and import them into QIIME 2. The data we use in this tutorial has already been imported into QIIME 2 for you. [This](https://drive.google.com/file/d/1noyVVSz2U-UG_ev72I7q7ysDoNlm4Ijk/view?usp=sharing) video gives a basic overview of what importing data into QIIME 2 using a manifest file looks like.
 
 First, let’s download the metadata containing the NCBI SRA project, accession number SRR13445888.
 
@@ -25,7 +38,7 @@ First, let’s download the metadata containing the NCBI SRA project, accession 
 project_accession = use.init_artifact_from_url('project-accession',
                                               'https://www.dropbox.com/scl/fi/h470qev6vqrzir3f7yksk/project_id.qza?rlkey=ra7jno6nzs0m2ddkynvgt3w14&st=rmpx5ndn&dl=1')
 :::
-Then we can visualize it using qiime metadata tabulate.
+Then we can visualize it using `qiime metadata tabulate`.
 
 :::{describe-usage}
 
@@ -49,7 +62,7 @@ qiime fondue get_sequences \
     --o-failed-runs failed-runs.qza
 ```
 
- or you can download the demux artifact here:
+or you can download the demux artifact here:
 
 :::{describe-usage}
 demux = use.init_artifact_from_url('demux',
@@ -57,7 +70,7 @@ demux = use.init_artifact_from_url('demux',
 :::
 Now, let’s visualize our data using demux summarize to assess sequencing quality.
 
-:::note
+:::{note}
 In QIIME 2, all data is structured as an Artifact of a specific semantic type. Artifacts contain the data as well as information about the data, including a record of the original data and the tools used to process it. This allows for better tracking of how you actually got to where you are in your analysis. You can learn more about common QIIME 2 Artifacts and semantic types here.
 :::
 
@@ -71,7 +84,7 @@ use.action(
 
 ### Understanding the Data
 
-If you downloaded your data using q2-fondue, or received it from a sequencing facility, you will typically need three key files:
+If you downloaded your data from NCBI-SRA, or received it from a sequencing facility, you will typically need three key files:
 
 Metadata file – This mapping file provides contextual information about your experiment, including hypotheses, treatments, and sample details.
 
@@ -79,7 +92,7 @@ Classifier file – Used for assigning taxonomy during analysis.
 
 Sequence files – These are usually in FASTQ format or already imported into QIIME 2 as .qza files.
 
-To begin exploring your data and assessing its quality, open the demux.qzv file in QIIME 2 View. This visualization helps you evaluate read quality, which is critical for determining appropriate trimming parameters in downstream steps.
+To begin exploring your data and assessing its quality, open the `demux.qzv` file in QIIME 2 View. This visualization helps you evaluate read quality, which is critical for determining appropriate trimming parameters in downstream steps.
 
 ## Revision Questions
 
@@ -92,7 +105,7 @@ To begin exploring your data and assessing its quality, open the demux.qzv file 
 Note: If any of the samples have very few sequences (e.g., fewer than 1,000), you may want to omit them from downstream analysis, as they could negatively affect data interpretation.
 
 # Denoising Using DADA2
-Denoising is the process of correcting errors in the sequencing data and delimitating ASVs (amplicon sequence variants). The Non-biological sequences (e.g., adapters, primers, linker pads, etc.) and errors created by sequencing machines, such as incorrect base calls or random noise which can lead to inaccurate results if not corrected.
+Denoising is the process of correcting errors in the sequencing data and delimitating ASVs (amplicon sequence variants). The Non-biological sequences (e.g., adapters, primers, linker pads, etc.) and errors created by sequencing machines, such as incorrect base calls or random noise which can lead to inaccurate results if not corrected. For a more detailed lecture on this process, watch [this](https://drive.google.com/file/d/12ji91W-DAew_z9dGc6D0aDtpWEqe-m8l/view?usp=sharing) video.
 
 :::{describe-usage}
 table, denoising_stats, representative_sequences = use.action(
@@ -146,15 +159,18 @@ table_summary = use.action(
     use.UsageOutputNames(visualization='table'))
 :::
 
-# Taxonomic assignment 
-## Classifications with fit-classifier-naive-bayes 
+# Taxonomic assignment
+
+In order to understand which microbes are in the environment we sampled, we need to taxonomically annotate our sequences. More information on this process may be found [here](https://drive.google.com/file/d/1awHVwbNUt6_PeFy7uzhSIRTXHIgIbMB8/view?usp=sharing).
+
+## Classifications with fit-classifier-naive-bayes
 
 To construct a taxonomic classifier using the MaarjAM database, two primary input files are required:
 
 1. A FASTA file containing the reference sequences
 2. A taxonomy file mapping those sequences to their taxonomic lineages
 
-These resources can be downloaded from the official MaarjAM database website. Alternatively, pre-imported .qza files are also be downloaded from here:
+These resources can be downloaded from [the official MaarjAM database website](https://maarjam.ut.ee/?action=bDownload). Alternatively, pre-imported .qza files are also be downloaded from here:
 
 :::{describe-usage}
 def maarjam_refseq_factory():
@@ -183,28 +199,22 @@ ref_taxonomy_maarjam = use.init_artifact('ref_taxonomy_maarjam', maarjam_taxonom
 
 :::
 
-:::{note}
-Due to time constraints, this command is not generated in this notebook. The resulting artifacts can be generated by running this command or running wget the artifact below. 👇
-:::
-
-Note : Building an accurate classifier file is crucial for reliable taxonomic analysis, as it can significantly influence your results. An incorrect or poorly trained classifier may lead to unassigned or misclassified sequences. It's recommended to run your data using both the vsearch and sklearn methods for comparison. Details on both approaches are provided [here].
-
-
+Next step is building the classifier file. Building an accurate classifier file is crucial for reliable taxonomic analysis, as it can significantly influence your results. An incorrect or poorly trained classifier may lead to unassigned or misclassified sequences. It's recommended to run your data using both the [vsearch](https://amplicon-docs.qiime2.org/en/latest/references/plugins/vsearch.html#q2-plugin-vsearch) and [sklearn](https://amplicon-docs.qiime2.org/en/latest/references/plugins/sample-classifier.html) methods for comparison.
 
 ```code
 qiime feature-classifier fit-classifier-naive-bayes \
-    --i-reference-reads ref-seqs-maarjam.qza \
+    --i-reference-reads maarjam-ref-seq.qza \
     --i-reference-taxonomy ref-taxonomy-maarjam.qza \
-    --o-classifier classifier-maarjam.qza 
+    --o-classifier classifier-maarjam.qza
 ```
+
+:::{note}
+Due to time constraints, this command is not generated in this notebook. The resulting artifacts can be generated by running this command or running wget the artifact below. 👇
+:::
 
 :::{describe-usage}
 classifier_maarjam = use.init_artifact_from_url('classifier_maarjam',
                                    'https://www.dropbox.com/scl/fi/bh65ab79wmo9calgiwsxr/classifier-maarjam-1.qza?rlkey=rxegaem82jpclb8e40fp019ru&st=ludlvgxt&dl=1')
-:::
-
-:::{note}
-Due to time constraints, this command is not generated in this notebook. The resulting artifacts can be generated by running this command or running wget the artifact below. 👇
 :::
 
 ```code
@@ -230,10 +240,14 @@ use.action(
         visualization='taxonomy_maarjam_md'))
 :::
 
+For convenience value of `p-confidence` is kept 0.7; however, it would be ideal to keep this at 0.97.
+
 ## Revision Questions
 
 1.  How many of your ASVs were taxonomically assigned?
    note :view your taxonomy.qzv file
+
+2.  What was the difference in the number of ASVs when you used `p-confidence` of 0.97
 
 ## Classifications with classify-consensus-vsearch
 ### Classification with maarjAM
@@ -264,11 +278,14 @@ use.action(
         visualization='rice_taxonomy_vsearch'))
 :::
 
-# Revision Questions
+## Revision Questions
 
-1.  How many of your ASVs were taxonomically assigned by this method. Is there a difference in outpu between fit-classifier-naive-bayes   and classify-consensus-vsearch?
+1. How many of your ASVs were taxonomically assigned by this method. Is there a difference in output between fit-classifier-naive-bayes and classify-consensus-vsearch?
 
-# Taxonomy Bar Plot 
+## Taxonomy Bar Plot
+
+The output of of `feature-classifier classify-sklearn` is used for the rest of the tutorial over the `vsearch` output.
+
 :::{describe-usage}
 taxa_bar_plots = use.action(
     use.UsageAction(plugin_id='taxa', action_id='barplot'),
@@ -279,15 +296,15 @@ taxa_bar_plots = use.action(
     use.UsageOutputNames(visualization='taxa_bar_plots'))
 :::
 
-# Revision Questions
- 1. What are the dominant phyla in each in each group ?
+## Revision Questions
+1. What are the dominant phyla in each in each group ?
 
-Note : Visualize the samples at Level 6 (which corresponds to the genus of AMF in this analysis), and then sort the samples by  env_broad_level,  You can add as many taxonomic levels levels you want.
+Visualize the samples at Level 6 (which corresponds to the genus of AMF in this analysis), and then sort the samples by  env_broad_level,  You can add as many taxonomic levels levels you want.
 If it's hard to visualize the dominant phyla in each in each group, download the csv file on left hand side and use this to plot a relative abundance chart.
 
-# Filtering Tables
+## Filtering Tables
 
-You can filter table if you want to work with specific group of taxa. You can create separate files for traditionnal and modern varieties if you want to.
+You can filter table if you want to work with specific group of taxa. You can create separate files for traditional and modern varieties if you want to.
 
 :::{describe-usage}
 traditional_rice_table, = use.action(
@@ -326,11 +343,9 @@ modern_rice_table_viz = use.action(
 :::
 
 # Differential abundance (ANCOM-BC)
-It identifies taxa that are differentially abundant in modern or traditional rice variety.
+Accurately identifying features that are differentially abundant across sample types in microbiome data is a challenging problem and an open area of research. Analysis of Compositions of Microbiomes with Bias Correction (ANCOM-BC) is a methodology for differential abundance (DA) testing that corrects bias in microbiome data. Here we will use ANCOM-BC to identify taxa that are differentially abundant in modern or traditional rice varieties. For more information on this process watch [this](https://drive.google.com/file/d/1QVXHvtzTUYa1Z195oDbBSnwN265fPaL2/view?usp=sharing) video.
 
-Accurately identifying features that are differentially abundant across sample types in microbiome data is a challenging problem and an open area of research. Analysis of Compositions of Microbiomes with Bias Correction (ANCOM-BC) is a methodology for differential abundance (DA) testing that corrects bias in microbiome data.
-
-Filter table to selectively pick the Glomeromycota phylum features.
+We need to filter our table so we can investigate only Glomeromycetes class features.
 
 :::{describe-usage}
 glomeromycetes_table, = use.action(
@@ -338,7 +353,7 @@ glomeromycetes_table, = use.action(
     use.UsageInputs(
         table=table,
         taxonomy=taxonomy_maarjam,
-        include='p__Mucoromycota'),
+        include='c__Glomeromycetes'),
     use.UsageOutputNames(filtered_table='glomeromycetes_table'))
 :::
 
@@ -367,16 +382,18 @@ l6_da_barplot = use.action(
     use.UsageAction(plugin_id='composition', action_id='da_barplot'),
     use.UsageInputs(
         data=l6_ancombc_differentials,
-        significance_threshold=0.01,
+        significance_threshold=0.05,
         level_delimiter=';'),
     use.UsageOutputNames(visualization='l6_da_barplot'))
 :::
-# Revision Questions
+## Revision Questions
 
- 1. Which taxa are enriched in traditional varieties?
- Note: try changing sample_name to column 'env_broad_scale'; try with significance threshold of 0.05 also.
+1. Which taxa are enriched in traditional varieties?
+Note: try changing sample_name to column 'env_broad_scale'; try with significance threshold of 0.01 also.
 
 # Diversity Analysis
+
+Now let's investigate community richness i.e. alpha diversity and the compositional differences of the AMF communities associates with different rice varieties i.e. beta diversity. Watch [this](https://drive.google.com/file/d/1NYqlfypFqKmf20r8VAaokvvMCNts7RI0/view?usp=sharing) video for more information.
 
 ## Phylogenetic tree
 
@@ -394,7 +411,7 @@ rooted_tree, unrooted_tree, aligned_rep_seqs, masked_aligned_rep_seqs = use.acti
         masked_alignment='masked_aligned_rep_seqs'))
 :::
 
-# Alpha rarefaction Plot
+## Alpha rarefaction Plot
 
 :::{describe-usage}
 alpha_rarefaction_plot = use.action(
@@ -402,30 +419,20 @@ alpha_rarefaction_plot = use.action(
     use.UsageInputs(
         table=table,
         phylogeny=rooted_tree,
-        max_depth=5400,
+        max_depth=1321,
         metadata=metadata,
         steps=4,
         iterations=4
         ),
     use.UsageOutputNames(visualization='alpha_rarefaction'))
 :::
-# Revision Questions
+## Revision Questions
 
-1. How did we decide as maximum depth 13299 ?
+1. How did we decide as maximum depth 1321 ?
 
-Note : The max depth setting will depend on the number of sequences in your samples. The value that you provide for –p-max-depth should be determined by reviewing the OTU Frequency per sample information presented in the table.qzv file that was created above. Also observe that Do the refraction curves for each sample plateau? If they don’t, the samples haven’t been sequenced deeply enough to capture the full diversity of the AM fungal communities, which is shown on the y-axis. At what sequencing depth (x-axis) do your curves plateau? This value will be important for downstream analyses, particularly for alpha diversity analyses. Considering both features and samples retained is very important : lets go back to view our table
-
-:::{describe-usage}
-review_table = use.action(
-    use.UsageAction(plugin_id='feature_table', action_id='summarize'),
-    use.UsageInputs(
-        table=table),
-    use.UsageOutputNames(visualization='review_table'))
-:::
+The max depth setting will depend on the number of sequences in your samples. The value that you provide for –p-max-depth should be determined by reviewing the OTU Frequency per sample information presented in the `table.qzv` file that was created above. Also observe that, do the refraction curves for each sample plateau? If they don’t, the samples haven’t been sequenced deeply enough to capture the full diversity of the AM fungal communities, which is shown on the y-axis. At what sequencing depth (x-axis) do your curves plateau? This value will be important for downstream analyses, particularly for alpha diversity analyses. Considering both features and samples retained is very important.
 
 You may want to increase that value if the lines in the resulting rarefaction plot don’t appear to be leveling out, or decrease that value if you seem to be losing many of your samples due to low total frequencies closer to the minimum sampling depth than the maximum sampling depth.
-1602
-Retained 206,658 (8.75%) features in 129 (90.21%) samples at the specified sampling depth. So we will use 1602 for further analysis.
 
 :::{describe-usage}
 core_metrics_outputs = use.action(
@@ -433,7 +440,7 @@ core_metrics_outputs = use.action(
     use.UsageInputs(
         table=table,
         phylogeny=rooted_tree,
-        sampling_depth=1602,
+        sampling_depth=401,
         metadata=metadata,
         ),
     use.UsageOutputNames(
@@ -483,7 +490,7 @@ faith_pd_group_significance = use.action(
     use.UsageOutputNames(visualization='faith_group'))
 :::
 
-# Revision Questions
+## Revision Questions
 1. Is species richness same as number of ASVs ?
 
 ## Beta Diversity
