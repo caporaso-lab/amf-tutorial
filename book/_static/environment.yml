@@ -4,13 +4,10 @@ channels:
 - bioconda
 dependencies:
   - qiime2-amplicon
-  - nodejs
   - pip
   - entrezpy
   - python-dotenv
   - pyzotero
   - xmltodict
   - pip:
-    - q2doc@git+https://github.com/qiime2/q2doc@dev
-    - jupyter-book==2.0.0b1
     - q2-fondue@git+https://github.com/bokulich-lab/q2-fondue@2025.4.0
