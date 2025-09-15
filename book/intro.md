@@ -24,6 +24,8 @@ In this tutorial you’ll use the amplicon distribution of QIIME 2 to perform an
 
 The dataset used in this tutorial originates from the study by Parvin et al. (2021) and represents a small, curated subset of the original data available on NCBI SRA, chosen to allow rapid processing on a personal computer. This dataset comprises 18S rRNA amplicon sequences targeting AMF in rice root samples, generated using the Illumina MiSeq platform ( ~3.1 MB download). A 350 bp fragment of the small subunit (SSU) rRNA gene was PCR-amplified using Glomeromycota-specific primers AMV4.5NF and AMDGR, each tagged with sample-specific indices to enable dual-index sequencing. For video context for this study refer to [this](https://drive.google.com/file/d/1vPIqWccvzjmadfkJ8z1GswT2g__OYnVx/view?usp=sharing) video.
 
+![Some of the people behind this tutorial and QIIME 2](_static/team.png 'Left to right: Chloe Herman, Greg Caporaso, Manju Gupta, Jeff Meilander')
+
 References
 Smith, S.E. and Read, D.J., 2010. Mycorrhizal symbiosis. Academic press.
 Martin, F.M. and van Der Heijden, M.G., 2024. The mycorrhizal symbiosis: research frontiers in genomics, ecology, and agricultural application. New Phytologist, 242(4), pp.1486-1506

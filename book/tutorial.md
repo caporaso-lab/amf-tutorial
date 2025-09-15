@@ -12,7 +12,7 @@ This tutorial uses the command line interface or cli. If you are uncomfortable w
 Make sure you have conda installed by running the command `conda --version`. If you do not have conda installed follow the instructions [here](https://library.qiime2.org/quickstart/amplicon#id-1-installing-miniconda).
 
 ```
-conda env create -n q2-amf-tutorial -f https://amf-tutorial.readthedocs.io/en/latest/build/environment-b1d7772e405cbc1565ad5d4ff27ccf4b.yml
+conda env create -n q2-amf-tutorial -f https://github.com/caporaso-lab/amf-tutorial/blob/main/book/_static/environment.yml
 conda activate q2-amf-tutorial
 ```
 
@@ -54,8 +54,8 @@ use.action(
 We can use q2-fondue 🫕 to easily import the data using this command:
 
 ```
-qiime fondue get_sequences \
-    --p-accession-ids project_id.qza \
+qiime fondue get-sequences \
+    --i-accession-ids project-accession.qza \
     --p-email [Insert Your Email] \
     --o-single-reads single-reads-demux.qza \
     --o-paired-reads demux.qza \
