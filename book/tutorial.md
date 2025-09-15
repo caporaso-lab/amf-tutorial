@@ -55,6 +55,12 @@ use.action(
 
 We can use q2-fondue 🫕 to easily import the data using this command:
 
+<!-- TODO: Remove this when/if fixed -->
+
+:::{warning}
+There is currently an issue with fondue preventing this command from running correctly. For now, simply run the wget command above.
+:::
+
 ```
 qiime fondue get-sequences \
     --i-accession-ids project-accession.qza \
