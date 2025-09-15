@@ -11,6 +11,8 @@ This tutorial uses the command line interface or cli. If you are uncomfortable w
 
 Make sure you have conda installed by running the command `conda --version`. If you do not have conda installed follow the instructions [here](https://library.qiime2.org/quickstart/amplicon#id-1-installing-miniconda).
 
+<!-- TODO: When there is a release of amplicon that has q2-fondue use that here maybe? Would need the whole per architecture instructions then right? -->
+
 ```
 conda env create -n q2-amf-tutorial -f https://raw.githubusercontent.com/caporaso-lab/amf-tutorial/refs/heads/main/book/_static/environment.yml
 conda activate q2-amf-tutorial
