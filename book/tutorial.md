@@ -38,7 +38,7 @@ First, let’s download the metadata containing the NCBI SRA project, accession 
 
 :::{describe-usage}
 project_accession = use.init_artifact_from_url('project-accession',
-                                              'https://www.dropbox.com/scl/fi/h470qev6vqrzir3f7yksk/project_id.qza?rlkey=ra7jno6nzs0m2ddkynvgt3w14&st=rmpx5ndn&dl=1')
+                                              'https://www.dropbox.com/scl/fi/reb68ejk9qxkvyq4h3twr/project_ids.qza?rlkey=6iit6w5v7omzgqxvg4phgymjd&st=5q023rc9&dl=1')
 :::
 Then we can visualize it using `qiime metadata tabulate`.
 
@@ -74,7 +74,7 @@ or you can download the demux artifact here:
 
 :::{describe-usage}
 demux = use.init_artifact_from_url('demux',
-                                   'https://www.dropbox.com/scl/fi/81fwmwgymuq1ae4o18xpb/subsampled_demux.qza?rlkey=yyzr6inkmt85xv6i54d7qitml&st=3pjj0kd5&dl=1')
+                                   'https://www.dropbox.com/scl/fi/94eglwqvn3noifxgc1lnt/subsampled.qza?rlkey=kof7j05xwy02bqeh6ym6qiwof&st=l997ie53&dl=1')
 :::
 Now, let’s visualize our data using demux summarize to assess sequencing quality.
 
