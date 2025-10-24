@@ -222,7 +222,7 @@ Due to time constraints, this command is not generated in this notebook. The res
 
 :::{describe-usage}
 classifier_maarjam = use.init_artifact_from_url('classifier_maarjam',
-                                   'https://www.dropbox.com/scl/fi/bh65ab79wmo9calgiwsxr/classifier-maarjam-1.qza?rlkey=rxegaem82jpclb8e40fp019ru&st=ludlvgxt&dl=1')
+                                   'https://www.dropbox.com/scl/fi/r9w35jljgnwi77tkaj7xz/classifier-maarjam.qza?rlkey=knhwft4ywkmf1dets1rzh5ehp&st=r4czsbzq&dl=1')
 :::
 
 ```code
@@ -235,7 +235,7 @@ qiime feature-classifier classify-sklearn \
 
 :::{describe-usage}
 taxonomy_maarjam = use.init_artifact_from_url('taxonomy_maarjam',
-                                   'https://www.dropbox.com/scl/fi/9zpv1fg8nsrcaj0v0oarb/taxonomy-maarjam-subsampled.qza?rlkey=rhzuw7mgz94hz85jx8see82q8&st=3t5cjlc3&dl=1')
+                                   'https://www.dropbox.com/scl/fi/bo3pswfh65rl6339c9adt/taxonomy-maarjam.qza?rlkey=xpkqu5xrml40woq9cassl9kxf&st=jbkmmrf7&dl=1')
 :::
 
 :::{describe-usage}
