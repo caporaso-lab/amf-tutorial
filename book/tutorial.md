@@ -207,7 +207,7 @@ ref_taxonomy_maarjam = use.init_artifact('ref_taxonomy_maarjam', maarjam_taxonom
 
 :::
 
-Next step is building the classifier file. Building an accurate classifier file is crucial for reliable taxonomic analysis, as it can significantly influence your results. An incorrect or poorly trained classifier may lead to unassigned or misclassified sequences. It's recommended to run your data using both the [vsearch](https://amplicon-docs.qiime2.org/en/latest/references/plugins/vsearch.html#q2-plugin-vsearch) and [sklearn](https://amplicon-docs.qiime2.org/en/latest/references/plugins/sample-classifier.html) methods for comparison.
+Next step is building the classifier file. Building an accurate classifier file is crucial for reliable taxonomic analysis, as it can significantly influence your results. An incorrect or poorly trained classifier may lead to unassigned or misclassified sequences. It's recommended to run your data using both the [vsearch](https://amplicon-docs.qiime2.org/en/stable/references/plugins/vsearch.html#q2-plugin-vsearch) and [sklearn](https://amplicon-docs.qiime2.org/en/stable/references/plugins/sample-classifier.html) methods for comparison.
 
 ```code
 qiime feature-classifier fit-classifier-naive-bayes \
